@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI SWARM Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    .container {
+      padding: 20px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background-color: #fff;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    li:hover {
+      background-color: #f0f0f0;
+    }
+    .job-details {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI SWARM Dashboard</h1>
+  </header>
+  <div class="container">
+    <input type="text" id="searchBar" placeholder="Search for a job position..." oninput="filterJobs()">
+    <ul id="jobList"></ul>
+    <div id="jobDetails" class="job-details" style="display: none;">
+      <h2 id="jobTitle">Job Title</h2>
+      <p><strong>Responsibilities:</strong> <span id="jobResponsibilities"></span></p>
+      <p><strong>Skills:</strong> <span id="jobSkills"></span></p>
+    </div>
+  </div>
+
+  <script>
+    // Static data for job roles
+    const jobs = [
+      {
+        title: "Marketing Manager",
+        responsibilities: "Manage social media accounts, create marketing reports.",
+        skills: "SEO, Content Creation, Analytics"
+      },
+      {
+        title: "Sales Representative",
+        responsibilities: "Generate leads, close sales, maintain customer relationships.",
+        skills: "Communication, Negotiation, CRM Tools"
+      },
+      {
+        title: "Software Developer",
+        responsibilities: "Develop software applications, write clean code, debug issues.",
+        skills: "JavaScript, Python, Problem Solving"
+      }
+    ];
+
+    // Function to display all jobs
+    function displayJobs(filteredJobs = jobs) {
+      const jobList = document.getElementById("jobList");
+      jobList.innerHTML = ""; // Clear the list
+      filteredJobs.forEach(job => {
+        const li = document.createElement("li");
+        li.textContent = job.title;
+        li.onclick = () => showJobDetails(job);
+        jobList.appendChild(li);
+      });
+    }
+
+    // Function to filter jobs based on search input
+    function filterJobs() {
+      const query = document.getElementById("searchBar").value.toLowerCase();
+      const filteredJobs = jobs.filter(job =>
+        job.title.toLowerCase().includes(query)
+      );
+      displayJobs(filteredJobs);
+    }
+
+    // Function to show job details
+    function showJobDetails(job) {
+      document.getElementById("jobTitle").textContent = job.title;
+      document.getElementById("jobResponsibilities").textContent = job.responsibilities;
+      document.getElementById("jobSkills").textContent = job.skills;
+      document.getElementById("jobDetails").style.display = "block";
+    }
+
+    // Initial display of all jobs
+    displayJobs();
+  </script>
+</body>
+</html>
